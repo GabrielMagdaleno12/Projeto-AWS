@@ -1,0 +1,9 @@
+{
+  "name": "projeto01-backend",
+  "version": "1.0.0",
+  "description": "API do Projeto 01 - responde na porta 25000",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "^4.21.2" }
+}

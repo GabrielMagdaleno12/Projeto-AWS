@@ -1,0 +1,22 @@
+# Para testar tudo no seu computador antes de ir para a AWS:
+#   docker compose up --build
+# Depois abra http://localhost:8080
+#
+# Só a web publica porta. O back-end fica acessível apenas pela rede interna do compose,
+# o que imita o isolamento que o backend-sg faz na AWS.
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    expose:
+      - "25000"
+
+  web:
+    build: ./web
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: http://backend:25000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend

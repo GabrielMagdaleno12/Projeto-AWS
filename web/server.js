@@ -11,7 +11,8 @@ const TIMEOUT_MS = 3000;
 
 const app = express();
 app.disable('x-powered-by');
-app.use(express.static(path.join(__dirname, 'public')));
+// index: false evita que um index.html antigo na pasta public sobreponha a rota '/' abaixo.
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
 // Evita que texto vindo do back-end seja interpretado como HTML.
 const esc = (v) => String(v)

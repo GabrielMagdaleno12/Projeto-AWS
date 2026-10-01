@@ -1,0 +1,226 @@
+:root {
+  --fundo: #e9eff3;
+  --superficie: #ffffff;
+  --tinta: #10263b;
+  --tinta-suave: #4d6174;
+  --linha: #c7d4dd;
+  --destaque: #0b6e99;
+  --ok: #12805a;
+  --erro: #b8372b;
+  --espera: #8a9aa8;
+  --fonte: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--fonte);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+main {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem) 3rem;
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+.topo p {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--tinta-suave);
+  font-size: 1.1rem;
+}
+
+/* ---------- Painel com o caminho da requisição ---------- */
+.painel {
+  margin-top: 2.25rem;
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+}
+
+.painel-cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--destaque);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: #095a7e; }
+button:disabled { background: var(--espera); cursor: progress; }
+button:focus-visible { outline: 3px solid var(--tinta); outline-offset: 2px; }
+
+.rota {
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.no {
+  position: relative;
+  flex: 0 0 auto;
+  width: 11rem;
+  padding: 0.9rem 1rem;
+  background: var(--fundo);
+  border: 2px solid var(--linha);
+  border-radius: 10px;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+.no strong { display: block; padding-right: 1.2rem; font-size: 1rem; }
+.no .sub {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--tinta-suave);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.luz {
+  position: absolute;
+  top: 1rem;
+  right: 0.9rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--espera);
+}
+
+.no.ok { border-color: var(--ok); }
+.no.ok .luz { background: var(--ok); }
+.no.erro { border-color: var(--erro); background: #fbeceb; }
+.no.erro .luz { background: var(--erro); }
+.no.carregando .luz { animation: pulsar 1s ease-in-out infinite; }
+
+@keyframes pulsar {
+  50% { opacity: 0.25; }
+}
+
+/* Ligações entre os nós */
+.elo {
+  position: relative;
+  flex: 1 1 4rem;
+  min-width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.elo::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 2px dashed var(--linha);
+}
+.elo span {
+  position: relative;
+  padding: 0.15rem 0.5rem;
+  background: var(--superficie);
+  color: var(--tinta-suave);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.elo.ok::before { border-top: 2px solid var(--ok); }
+.elo.ok span { color: var(--ok); font-weight: 650; }
+.elo.erro::before { border-top: 2px dashed var(--erro); }
+.elo.erro span { color: var(--erro); font-weight: 650; }
+
+/* O pacote que percorre o caminho: é o único movimento automático da página */
+.elo.viajando::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 5px);
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--destaque);
+  animation: viajar 0.9s ease-in-out infinite;
+}
+@keyframes viajar {
+  from { left: 0; }
+  to { left: calc(100% - 10px); }
+}
+
+.estado {
+  margin: 1.5rem 0 0;
+  color: var(--tinta-suave);
+}
+.estado.ok { color: var(--ok); font-weight: 600; }
+.estado.erro { color: var(--erro); font-weight: 600; }
+
+/* ---------- Resposta e infraestrutura ---------- */
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: 2.5rem;
+}
+
+.resumo { margin: 1rem 0 0; }
+.resumo div {
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--linha);
+}
+.resumo dt { color: var(--tinta-suave); font-size: 0.9rem; }
+.resumo dd { margin: 0.1rem 0 0; font-weight: 600; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+
+.infra { list-style: none; margin: 1rem 0 0; padding: 0; }
+.infra li { padding: 0.7rem 0; border-top: 1px solid var(--linha); }
+.infra strong { display: block; }
+.infra span { color: var(--tinta-suave); font-size: 0.95rem; }
+
+footer { margin-top: 2.5rem; color: var(--tinta-suave); font-size: 0.9rem; }
+footer p { margin: 0; }
+
+/* ---------- Telas estreitas: o caminho vira uma coluna ---------- */
+@media (max-width: 52rem) {
+  .rota { flex-direction: column; align-items: stretch; }
+  .no { width: 100%; }
+  .elo { flex: 0 0 3rem; min-width: 0; }
+  .elo::before { left: 50%; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--linha); }
+  .elo.ok::before { border-left: 2px solid var(--ok); }
+  .elo.erro::before { border-left: 2px dashed var(--erro); }
+  .elo.viajando::after { display: none; }
+  .colunas { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .no.carregando .luz, .elo.viajando::after { animation: none; }
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto 01 · Deploy com Docker na AWS</title>
+  <meta name="description" content="Aplicação web em container Docker na AWS, consultando um back-end isolado em sub-rede privada.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="topo">
+      <h1>Deploy com Docker na AWS</h1>
+      <p>Esta página roda em um container na porta 8080. Os dados abaixo vêm de outro container, na porta 25000, dentro de uma sub-rede privada que só a máquina web alcança.</p>
+    </header>
+
+    <section class="painel" aria-labelledby="t-caminho">
+      <div class="painel-cabeca">
+        <h2 id="t-caminho">Caminho da requisição</h2>
+        <button type="button" id="atualizar">Atualizar dados</button>
+      </div>
+
+      <ol class="rota" id="rota">
+        <li class="no" id="no-cliente">
+          <span class="luz" aria-hidden="true"></span>
+          <strong>Seu navegador</strong>
+          <span class="sub">Internet</span>
+        </li>
+        <li class="elo" id="elo-1" aria-hidden="true"><span>porta 8080</span></li>
+        <li class="no" id="no-web">
+          <span class="luz" aria-hidden="true"></span>
+          <strong>Servidor web</strong>
+          <span class="sub" id="web-host">aguardando</span>
+        </li>
+        <li class="elo" id="elo-2" aria-hidden="true"><span id="latencia">porta 25000</span></li>
+        <li class="no" id="no-back">
+          <span class="luz" aria-hidden="true"></span>
+          <strong>Back-end</strong>
+          <span class="sub" id="back-host">aguardando</span>
+        </li>
+      </ol>
+
+      <p id="estado" class="estado" role="status" aria-live="polite">Consultando o back-end…</p>
+    </section>
+
+    <div class="colunas">
+      <section aria-labelledby="t-resposta">
+        <h2 id="t-resposta">Resposta do back-end</h2>
+        <dl class="resumo" id="resumo">
+          <div><dt>Mensagem</dt><dd id="r-mensagem">—</dd></div>
+          <div><dt>Requisição recebida de</dt><dd id="r-origem">—</dd></div>
+          <div><dt>Hora no servidor</dt><dd id="r-hora">—</dd></div>
+          <div><dt>Tempo no ar</dt><dd id="r-uptime">—</dd></div>
+          <div><dt>Versão do Node.js</dt><dd id="r-node">—</dd></div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="t-infra">
+        <h2 id="t-infra">Infraestrutura desta implantação</h2>
+        <ul class="infra" id="infra"></ul>
+      </section>
+    </div>
+
+    <footer>
+      <p id="atualizado">Ainda sem dados.</p>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

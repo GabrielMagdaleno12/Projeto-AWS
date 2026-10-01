@@ -1,0 +1,9 @@
+{
+  "name": "projeto01-web",
+  "version": "1.0.0",
+  "description": "Aplicação web do Projeto 01 - responde na porta 8080",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "^4.21.2" }
+}
